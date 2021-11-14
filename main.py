@@ -3,6 +3,11 @@ import sys
 import random
 
 
+def show_score():
+    score_surface = font.render ("Score :" + str(score), True, (255,255,255))
+    score_rect = score_surface.get_rect(center = (35, bird_rect.centery))
+    screen.blit(score_surface, score_rect)
+
 def game_floor():
     screen.blit(floor_base,(floor_x_pos, 900))
     screen.blit(floor_base,(floor_x_pos + 576, 900))
@@ -26,7 +31,7 @@ def create_pipe():
 
 def move_pipes(pipes):
     for pipe in pipes:
-        pipe.centerx -= 3
+        pipe.centerx -= 5
     
     return pipes
 
@@ -42,6 +47,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 #variables
+font = pygame.font.Font('freesansbold.ttf', 32)
+score = 0
 gravity = 0.25
 bird_movement = 0
 
@@ -81,7 +88,6 @@ die_sound = pygame.mixer.Sound('sound/lebron-james.mp3')
 game_active = True
 
 while True:
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -91,6 +97,7 @@ while True:
                 bird_movement = 0
                 bird_movement -= 8
                 flap_sound.play()
+                score += 1
             if event.key == pygame.K_SPACE and game_active == False:
                 bird_rect.center = (100, 512)
                 bird_movement = 0
